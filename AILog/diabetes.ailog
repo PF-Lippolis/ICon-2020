@@ -9,28 +9,28 @@ askable has(I,C).
 
 diabetes_decision_tree(bt(polyuria, bt(gender_male, bt(alopecia, bt(age_over35, bt(muscle_stiffness, leaf(0), leaf(1)), bt(irritability, leaf(1), leaf(0.67))), bt(delayed_healing, leaf(1), leaf(0))), bt(polydipsia, bt(irritability, bt(partial_paresis, bt(delayed_healing, leaf(0), leaf(0.056)), bt(muscle_stiffness, leaf(1), leaf(0))), bt(genital_thrush, bt(age_over45, leaf(0.4), leaf(0)), leaf(1))), bt(muscle_stiffness, leaf(1), bt(irritability, leaf(0), leaf(1))))), bt(polydipsia, bt(delayed_healing, leaf(1), bt(alopecia, leaf(1), bt(itching, leaf(1), bt(obesity, leaf(0.33), leaf(0))))), leaf(1)))).
 
-% Un individuo I ha percentuale P di avere il diabete se:
+% Un individuo I ha probabilità P di avere il diabete se:
 %	esiste un albero decisionale per la predizione del diabete e
 %	è vera la relazione has_diabetes(I,P,Z) ovvero:
-%		quell'albero predice che l'individuo I ha percentuale P di avere il diabete.
+%		quell'albero predice che l'individuo I ha probabilità P di avere il diabete.
 has_diabetes(I,P) <-
 	diabetes_decision_tree(Z) &
 	has_diabetes(I,P,Z).
 	
-% Un albero predice che l'individuo I ha percentuale P di avere il diabete se:
+% Un albero predice che l'individuo I ha probabilità P di avere il diabete se:
 % 	L'albero è un nodo foglia etichettato con P.
 has_diabetes(I,P,leaf(P)).
 
-% Un albero predice che l'individuo I ha percentuale P di avere il diabete se:
+% Un albero predice che l'individuo I ha probabilità P di avere il diabete se:
 %	la condizione C indicata sulla foglia è vera e
-% 	Il sottoalbero destro predice similmente che l'individuo I ha percentuale P di avere il diabete.
-has_diabetes(I,R,bt(C,_,T))<-
+% 	Il sottoalbero destro predice similmente che l'individuo I ha probabilità P di avere il diabete.
+has_diabetes(I,P,bt(C,_,T))<-
     has(I,C) &
-    has_diabetes(I,R,T).
+    has_diabetes(I,P,T).
 
-% Un albero predice che l'individuo I ha percentuale P di avere il diabete se:
+% Un albero predice che l'individuo I ha probabilità P di avere il diabete se:
 %	la condizione C indicata sulla foglia è falsa e
-%	il sottoalbero sinistro predice similmente che l'individuo I ha percentuale P di avere il diabete.
-has_diabetes(I,R,bt(C,F,_))<-
+%	il sottoalbero sinistro predice similmente che l'individuo I ha probabilità P di avere il diabete.
+has_diabetes(I,P,bt(C,F,_))<-
 	~ has(I,C) &
-	has_diabetes(I,R,F).
+	has_diabetes(I,P,F).
