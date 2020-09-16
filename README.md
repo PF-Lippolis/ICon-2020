@@ -50,7 +50,7 @@ Ho sviluppato la GUI dell’applicazione usando la libreria PySimpleGUI.
 
 Le applicazioni che utilizzano l’Albero di Decisione per fare inferenza (file ‘diabetes.ailog’ e ‘prob_diabetes.ailog’ nella cartella AILog) sono state implementate nel linguaggio AILog.
 
-L’interprete AILog (file ailog2.pl nella cartella AILog) necessita dell’interprete Prolog [SWI-Prolog](https://www.swi-prolog.org/).
+Il meta-interprete AILog (file ailog2.pl nella cartella AILog) necessita dell’interprete Prolog [SWI-Prolog](https://www.swi-prolog.org/).
 
 È possibile visualizzare il lavoro effettuato nello sviluppo dei vari modelli senza installare alcun software: online visualizzando il [file nel repository](https://github.com/PF-Lippolis/ICon-2020/blob/master/ICon%20Project.ipynb) oppure tramite l’export html ICon project.html.
 
@@ -137,7 +137,7 @@ Tuttavia questa applicazione richiede un carico cognitivo particolarmente elevat
 
 Ho deciso, quindi, di sfruttare la struttura intrinseca dell’Albero di decisione per permettere all’utente di fare previsioni specificando il valore di un numero limitato di feature (dipendenti dalla profondità del ramo percorso).
 
-Ho sviluppato questa applicazione in AILog, in modo che potesse ragionare direttamente sulla struttura dell’albero e perché il linguaggio AILog supporta gli atomi askable: in questo modo l’applicazione interroga l’utente solo sulle condizioni del paziente necessarie al ragionamento.
+Ho sviluppato questa applicazione in AILog, in modo che potesse ragionare direttamente sulla struttura dell’albero e perché l’interprete per il linguaggio AILog, meta-interprete per il Prolog, lo espande con supporto per gli atomi askable: in questo modo l’applicazione interroga l’utente solo sulle condizioni del paziente necessarie al ragionamento.
 
 Le decisioni di progetto sono state due:
 
@@ -153,7 +153,7 @@ ask has_diabetes(Individuo, P).
 
 La variabile P rappresenta la probabilità che l’individuo ha il diabete.
 
-Al termine del ragionamento la variabile P si unificherà con un atomo ground, rendendo vera la relazione e dando all’utente il valore ricercato di P.
+Al termine del ragionamento la relazione si unificherà con un fatto, rendendo vera la relazione ed effettuando il binding della variabile P tramite il Most General Unifier calcolato, dando all’utente il valore ricercato di P.
 
 La seconda scelta riguarda il metodo di rappresentazione della struttura dell’albero.
 
